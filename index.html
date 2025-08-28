@@ -9,6 +9,8 @@
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #4e54c8, #8f94fb);
       color: #fff;
+     
+      background-position: center;
     }
     header {
       text-align: center;
@@ -22,6 +24,7 @@
       to {transform: translateY(0); opacity: 1;}
     }
     .container {
+      text-align: center;
       max-width: 400px;
       margin: 30px auto;
       background: rgba(0,0,0,0.6);
@@ -119,6 +122,12 @@
       from {transform: scale(0.5); opacity: 0;}
       to {transform: scale(1); opacity: 1;}
     }
+    .link{
+      color: white;
+      text-decoration: none;
+
+    }
+  
   </style>
 </head>
 <body>
@@ -127,20 +136,20 @@
   <!-- Registration Form -->
   <div class="container" id="registerPage">
     <h2>Register</h2>
-    <input type="text" id="regName" placeholder="Full Name" required>
-    <input type="email" id="regEmail" placeholder="Email" required>
-    <input type="password" id="regPass" placeholder="Password" required>
+    <input type="text" id="regName" placeholder="Full Name" required class="buut">
+    <input type="email" id="regEmail" placeholder="Email" required  class="buut">
+    <input type="password" id="regPass" placeholder="Password" required  class="buut">
     <button onclick="register()">Register</button>
-    <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+    <p>Already have an account? <a href="#" onclick="showLogin()" class="link">Login here</a></p>
   </div>
 
   <!-- Login Form -->
   <div class="container hidden" id="loginPage">
     <h2>Login</h2>
-    <input type="email" id="logEmail" placeholder="Email" required>
-    <input type="password" id="logPass" placeholder="Password" required>
+    <input type="email" id="logEmail" placeholder="Email" required  class="buut">
+    <input type="password" id="logPass" placeholder="Password" required  class="buut">
     <button onclick="login()">Login</button>
-    <p>Don’t have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+    <p>Don’t have an account? <a href="#" onclick="showRegister()" class="link">Register here</a></p>
   </div>
 
   <!-- Dashboard -->
@@ -270,9 +279,9 @@
       document.getElementById("dashContent").innerHTML = `
         <h3>Buy Redeem Code</h3>
         <p>Please make a payment 5000 for the code fee to the account below:</p>
-        <p><b>Bank:</b> Opay Bank</p>
-        <p><b>Account Number:</b> <span id="acctNoCopy">8144281750</span> 
-        <p><b>Account Name:</b>Dauda Joseph</p>
+        <p><b>Bank:</b> Paystack-Titan Bank</p>
+        <p><b>Account Number:</b> <span id="acctNoCopy">9936255608</span> 
+        <p><b>Account Name:</b>SQUADS GAME</p>
       <button onclick="copyAcct()">Copy</button></p>
         
         <button onclick="confirmPayment()">I have made the payment</button>
